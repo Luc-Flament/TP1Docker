@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  backend:
+    context: ./FILE_LEAF
+    dockerfile: Dockerfile
+    networks:
+      - app-network
+    depends_on:
+      - database
+  database:
+    context: ./FILE_TREE
+    networks:
+      - app-network
+
+  httpd:
+    context: ./FILRE_ROOT
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    configs:
+      - httpd.config
+    depends_on:
+      - backend
+
+networks:
+  app-network: {}
